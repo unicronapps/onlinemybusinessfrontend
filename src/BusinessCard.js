@@ -14,6 +14,7 @@ import FAQSection from "./FAQSection";
 
 const BusinessCard = () => {
   const [companyName, setCompanyName] = useState("Beauty Point");
+  const [companyDescription, setCompanyDescription] = useState("");
   const [yearOfEst, setYearOfEst] = useState("2023");
   const [natureOfBusiness, setNatureOfBusiness] = useState("Beauty Makeover");
   const [socialLinks, setSocialLinks] = useState([
@@ -51,10 +52,10 @@ const BusinessCard = () => {
     },
   ]);
   const [headerImage, setHeaderImage] = useState(
-    "https://example.com/header-logo.png" // Replace with actual URL or set to null for testing
+    "https://www.kalnirnay.com/wp-content/uploads/2017/01/waytomakeover.jpg" // Replace with actual URL or set to null for testing
   );
   const [mainImage, setMainImage] = useState(
-    "https://example.com/main-logo.png" // Replace with actual URL or set to null for testing
+    "https://static.vecteezy.com/system/resources/previews/000/660/301/original/vector-beauty-salon-skin-care-logo.jpg" // Replace with actual URL or set to null for testing
   );
   const [selectedImage, setSelectedImage] = useState(null); // Track which image is selected (header or main)
   const [services, setServices] = useState([
@@ -178,7 +179,7 @@ const BusinessCard = () => {
     ]);
   };
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
       <HeaderImage
         headerImage={headerImage}
         mainImage={mainImage}
@@ -187,65 +188,6 @@ const BusinessCard = () => {
         openPopup={openPopup}
       />
 
-      {/* <div className="flex flex-col items-center mb-6">
-        <div
-          onClick={() => openPopup("header")}
-          className="w-full h-32 mb-2 bg-gray-200 flex items-center justify-center cursor-pointer"
-        >
-          {headerImage ? (
-            <img
-              src={headerImage}
-              alt="Header Logo"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span className="text-gray-500">No Image</span>
-          )}
-        </div>
-        <div
-          onClick={() => openPopup("main")}
-          className="w-28 h-28 bg-gray-200 flex items-center justify-center rounded-full border-4 border-white -mt-12 cursor-pointer"
-        >
-          {mainImage ? (
-            <img
-              src={mainImage}
-              alt="Main Logo"
-              className="w-full h-full object-cover rounded-full"
-            />
-          ) : (
-            <span className="text-gray-500">No Image</span>
-          )}
-        </div>
-      </div>
-      <div className="mb-4">
-        <h1 className="text-xl font-bold">
-          <EditableField
-            value={companyName}
-            onSave={setCompanyName}
-            placeholder="Company Name"
-          />
-        </h1>
-      </div>
-      <div className="mb-4">
-        <p>
-          <strong>Year of Est.: </strong>
-          <EditableField
-            value={yearOfEst}
-            onSave={setYearOfEst}
-            placeholder="Year of Est."
-          />
-        </p>
-      </div>
-      <div className="mb-4">
-        <p>
-          <strong>Nature of Business: </strong>
-          <EditableField
-            value={natureOfBusiness}
-            onSave={setNatureOfBusiness}
-            placeholder="Nature of Business"
-          />
-        </p>
-      </div> */}
       <CompanyInfo
         companyName={companyName}
         setCompanyName={setCompanyName}
@@ -253,32 +195,9 @@ const BusinessCard = () => {
         setYearOfEst={setYearOfEst}
         natureOfBusiness={natureOfBusiness}
         setNatureOfBusiness={setNatureOfBusiness}
+        companyDescription={companyDescription}
+        setCompanyDescription={setCompanyDescription}
       />
-
-      {/* <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Social Links</h2>
-        {socialLinks.map((link, index) => (
-          <div key={index} className="flex items-center mb-2">
-            <EditableField
-              value={link.platform}
-              onSave={(value) => handleSocialChange(index, "platform", value)}
-              placeholder="Platform"
-            />
-            <EditableField
-              value={link.link}
-              onSave={(value) => handleSocialChange(index, "link", value)}
-              placeholder="Link"
-              type="text"
-            />
-          </div>
-        ))}
-        <button
-          className="text-blue-500 text-sm mt-2"
-          onClick={handleAddSocialLink}
-        >
-          + Add Social Link
-        </button>
-      </div> */}
 
       <QuickButtons />
       <AboutUs aboutUs={aboutUs} setAboutUs={setAboutUs} />

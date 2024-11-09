@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import editableFunction from "./utils/editableFunction";
+import { FaPen } from "react-icons/fa"; // Import the pencil icon from react-icons
 
 const EditableField = ({
   value,
@@ -6,6 +8,8 @@ const EditableField = ({
   type = "text",
   placeholder,
   multiline = false,
+  isEditable = true,
+  textAlign,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentValue, setCurrentValue] = useState(value);
@@ -15,8 +19,25 @@ const EditableField = ({
     onSave(currentValue);
   };
 
+  let styleString = "";
+  if (textAlign) {
+    switch (textAlign) {
+      case "left":
+        styleString = styleString + "text-left";
+        break;
+      case "center":
+        styleString = styleString + "text-center";
+        break;
+      case "rignt":
+        styleString = styleString + "text-right";
+        break;
+
+      default:
+        break;
+    }
+  }
   return (
-    <div>
+    <div className="flex items-center">
       {isEditing ? (
         multiline ? (
           <textarea
@@ -41,11 +62,17 @@ const EditableField = ({
         )
       ) : (
         <span
-          onClick={() => setIsEditing(true)}
-          className="cursor-pointer text-gray-700 hover:text-blue-500"
+          onClick={() => editableFunction(isEditable, () => setIsEditing(true))}
+          className={` text-gray-700 hover:text-blue-500 ${styleString}`}
         >
-          {currentValue || placeholder}
+          {isEditable ? currentValue || placeholder : currentValue}
         </span>
+      )}
+      {isEditable && !isEditing && (
+        <FaPen
+          onClick={() => setIsEditing(true)}
+          className=" h-2 text-gray-500 hover:text-blue-500 cursor-pointer"
+        />
       )}
     </div>
   );

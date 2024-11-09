@@ -8,25 +8,28 @@ const CompanyInfo = ({
   setYearOfEst,
   natureOfBusiness,
   setNatureOfBusiness,
+  companyDescription,
+  setCompanyDescription,
 }) => (
-  <div>
-    <h1 className="text-xl font-bold">
+  <div className="flex flex-col items-center">
+    <h1 className="text-3xl font-bold">
       <EditableField
         value={companyName}
         onSave={setCompanyName}
         placeholder="Company Name"
       />
     </h1>
-    <p>
-      <strong>Year of Est.: </strong>
+    <p className="">
       <EditableField
-        value={yearOfEst}
-        onSave={setYearOfEst}
-        placeholder="Year of Est."
+        value={companyDescription}
+        onSave={setCompanyDescription}
+        placeholder="Add Description"
+        multiline
+        textAlign="center"
       />
     </p>
     <p>
-      <strong>Nature of Business: </strong>
+      {/* <strong>Nature of Business: </strong> */}
       <EditableField
         value={natureOfBusiness}
         onSave={setNatureOfBusiness}

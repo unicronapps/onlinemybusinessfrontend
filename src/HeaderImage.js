@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import ImagePopup from "./ImagePopup";
+import editableFunction from "./utils/editableFunction";
 
 const HeaderImage = ({
   headerImage,
   mainImage,
   setHeaderImage,
   setMainImage,
+  isEditable = true,
 }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedImageType, setSelectedImageType] = useState(null);
 
   const openPopup = (imageType) => {
-    setSelectedImageType(imageType);
-    setIsPopupOpen(true);
+    editableFunction(
+      isEditable,
+      () => {
+        setSelectedImageType(imageType);
+        setIsPopupOpen(true);
+      },
+      () => {
+        console.log("Editing is disabled.");
+      }
+    );
   };
 
   const closePopup = () => {
@@ -39,10 +49,10 @@ const HeaderImage = ({
   };
 
   return (
-    <div className="flex flex-col items-center mb-6">
+    <div className="flex flex-col items-center mb-3 -m-6">
       <div
         onClick={() => openPopup("header")}
-        className="w-full h-32 mb-2 bg-gray-200 flex items-center justify-center cursor-pointer"
+        className="w-full h-56 mb-2 bg-gray-200 flex items-center justify-center cursor-pointer"
       >
         {headerImage ? (
           <img
@@ -56,7 +66,7 @@ const HeaderImage = ({
       </div>
       <div
         onClick={() => openPopup("main")}
-        className="w-28 h-28 bg-gray-200 flex items-center justify-center rounded-full border-4 border-white -mt-12 cursor-pointer"
+        className="w-auto h-44 bg-gray-200 flex items-center justify-center rounded-full border-4 border-white -mt-12 cursor-pointer"
       >
         {mainImage ? (
           <img
