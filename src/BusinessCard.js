@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import EditableField from "./EditableField";
-import ImagePopup from "./ImagePopup";
-import GallerySection from "./GallerySection";
-import TeamSection from "./TeamSection";
-import ServicesSection from "./ServicesSection";
+import CompanyInfo from "./CompanyInfo";
+import SocialLinks from "./SocialLinks";
+import AboutUs from "./AboutUs";
 import QuickButtons from "./QuickButtons";
+import TeamSection from "./TeamSection";
+import Branches from "./Branches";
+import ServicesSection from "./ServicesSection";
+import GallerySection from "./GallerySection";
+import ImagePopup from "./ImagePopup";
+import EditableField from "./EditableField";
+import HeaderImage from "./HeaderImage";
+import FAQSection from "./FAQSection";
 
 const BusinessCard = () => {
   const [companyName, setCompanyName] = useState("Beauty Point");
@@ -173,7 +179,15 @@ const BusinessCard = () => {
   };
   return (
     <div className="max-w-sm mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <div className="flex flex-col items-center mb-6">
+      <HeaderImage
+        headerImage={headerImage}
+        mainImage={mainImage}
+        setMainImage={setMainImage}
+        setHeaderImage={setHeaderImage}
+        openPopup={openPopup}
+      />
+
+      {/* <div className="flex flex-col items-center mb-6">
         <div
           onClick={() => openPopup("header")}
           className="w-full h-32 mb-2 bg-gray-200 flex items-center justify-center cursor-pointer"
@@ -231,8 +245,17 @@ const BusinessCard = () => {
             placeholder="Nature of Business"
           />
         </p>
-      </div>
-      <div className="mb-4">
+      </div> */}
+      <CompanyInfo
+        companyName={companyName}
+        setCompanyName={setCompanyName}
+        yearOfEst={yearOfEst}
+        setYearOfEst={setYearOfEst}
+        natureOfBusiness={natureOfBusiness}
+        setNatureOfBusiness={setNatureOfBusiness}
+      />
+
+      {/* <div className="mb-4">
         <h2 className="text-lg font-semibold mb-2">Social Links</h2>
         {socialLinks.map((link, index) => (
           <div key={index} className="flex items-center mb-2">
@@ -255,97 +278,28 @@ const BusinessCard = () => {
         >
           + Add Social Link
         </button>
-      </div>
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">About Us</h2>
-        <EditableField
-          value={aboutUs}
-          onSave={setAboutUs}
-          placeholder="About Us"
-          multiline={true}
-        />
-      </div>
+      </div> */}
+
       <QuickButtons />
+      <AboutUs aboutUs={aboutUs} setAboutUs={setAboutUs} />
+      <SocialLinks
+        socialLinks={socialLinks}
+        handleSocialChange={handleSocialChange}
+        handleAddSocialLink={handleAddSocialLink}
+      />
 
       <TeamSection />
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Location and Address</h2>
-        {branches.map((branch, index) => (
-          <div key={index} className="mb-4 border p-2 rounded">
-            <div className="flex justify-between items-center mb-1">
-              <h3 className="font-semibold">
-                {index + 1}.{" "}
-                <EditableField
-                  value={branch.name}
-                  onSave={(value) => handleBranchChange(index, "name", value)}
-                  placeholder="Branch Name"
-                />
-              </h3>
-              <button
-                className="text-red-500 text-sm"
-                onClick={() => handleDeleteBranch(index)}
-              >
-                Delete
-              </button>
-            </div>
-            <p>
-              <EditableField
-                value={branch.type}
-                onSave={(value) => handleBranchChange(index, "type", value)}
-                placeholder="Branch Type"
-              />
-            </p>
-            <p>
-              <EditableField
-                value={branch.address}
-                onSave={(value) => handleBranchChange(index, "address", value)}
-                placeholder="Branch Address"
-                multiline={true}
-              />
-            </p>
-            <p>
-              Ph:{" "}
-              <EditableField
-                value={branch.phone}
-                onSave={(value) => handleBranchChange(index, "phone", value)}
-                placeholder="Phone Number"
-              />
-            </p>
-            <a
-              href={branch.googleMapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 flex items-center mt-2"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/55/Google_Maps_Logo.svg"
-                alt="Google Maps"
-                className="w-5 h-5 mr-1"
-              />
-              Google Maps
-            </a>
-          </div>
-        ))}
-        <button
-          className="text-blue-500 text-sm mt-2"
-          onClick={handleAddBranch}
-        >
-          + Add Branch
-        </button>
-      </div>
+      <Branches
+        branches={branches}
+        handleBranchChange={handleBranchChange}
+        handleAddBranch={handleAddBranch}
+        handleDeleteBranch={handleDeleteBranch}
+      />
+
       {/* Services and Goods Section */}
       <ServicesSection />
       <GallerySection />
-
-      {/* Image Popup for Service Image */}
-      {isPopupOpen && selectedServiceIndex !== null && (
-        <ImagePopup
-          image={services[selectedServiceIndex].image}
-          onClose={closeImagePopup}
-          onDelete={handleDeleteServiceImage}
-          onChange={handleChangeServiceImage}
-        />
-      )}
+      <FAQSection />
     </div>
   );
 };
