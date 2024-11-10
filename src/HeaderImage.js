@@ -7,7 +7,7 @@ const HeaderImage = ({
   mainImage,
   setHeaderImage,
   setMainImage,
-  isEditable = true,
+  isEditable = false,
 }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedImageType, setSelectedImageType] = useState(null);
@@ -81,6 +81,7 @@ const HeaderImage = ({
 
       {isPopupOpen && (
         <ImagePopup
+          imageRatio={selectedImageType === "header" ? 4 / 3 : 1}
           imageUrl={selectedImageType === "header" ? headerImage : mainImage}
           onClose={closePopup}
           onDelete={handleDeleteImage}

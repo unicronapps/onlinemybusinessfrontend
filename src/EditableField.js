@@ -8,7 +8,7 @@ const EditableField = ({
   type = "text",
   placeholder,
   multiline = false,
-  isEditable = true,
+  isEditable = false,
   textAlign,
 }) => {
   const [isEditing, setIsEditing] = useState(false);

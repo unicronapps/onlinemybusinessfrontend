@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import EditFieldModal from "./EditFieldModal";
 import AddFieldModal from "./AddFieldModal";
+import editableFunction from "./utils/editableFunction";
 
-const AboutUs = () => {
+const AboutUs = ({ isEditable = false }) => {
   const [fields, setFields] = useState({
     companyName: "OpenAI",
     yearOfEstablishment: "2015",
@@ -10,6 +11,14 @@ const AboutUs = () => {
   });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editField, setEditField] = useState(null);
+
+  const onClickFxn = (key) => {
+    editableFunction(
+      isEditable,
+      () => openEditModal(key),
+      () => console.log("key")
+    );
+  };
 
   // Open edit modal for a specific field
   const openEditModal = (key) => {
@@ -52,7 +61,7 @@ const AboutUs = () => {
         {Object.entries(fields).map(([key, value]) => (
           <div
             key={key}
-            onClick={() => openEditModal(key)}
+            onClick={() => onClickFxn(key)}
             className="flex justify-between  border-b pb-2"
           >
             <div>

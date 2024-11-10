@@ -18,9 +18,18 @@ const BusinessCard = () => {
   const [yearOfEst, setYearOfEst] = useState("2023");
   const [natureOfBusiness, setNatureOfBusiness] = useState("Beauty Makeover");
   const [socialLinks, setSocialLinks] = useState([
-    { platform: "Instagram", link: "@beautypoint" },
-    { platform: "WhatsApp", link: "+918448804428" },
-    { platform: "LinkedIn", link: "in/beautypoint" },
+    { platform: "Instagram", value: "@beautypoint" },
+    { platform: "WhatsApp", value: "+918448804428" },
+    { platform: "LinkedIn", value: "in/beautypoint" },
+    { platform: "Facebook", value: "facebook.com/beautypoint" },
+    { platform: "Twitter", value: "twitter.com/beautypoint" },
+    { platform: "YouTube", value: "youtube.com/c/beautypoint" },
+    { platform: "Pinterest", value: "pinterest.com/beautypoint" },
+    { platform: "Snapchat", value: "snapchat.com/add/beautypoint" },
+    { platform: "TikTok", value: "tiktok.com/@beautypoint" },
+    { platform: "Website", value: "https://beautypoint.com" },
+    { platform: "Email", value: "contact@beautypoint.com" },
+    { platform: "Phone", value: "+918448804429" },
   ]);
   const [aboutUs, setAboutUs] = useState(
     `Create your Virtual Business Card within minutes...`
@@ -78,12 +87,6 @@ const BusinessCard = () => {
 
   const handleAddSocialLink = () => {
     setSocialLinks([...socialLinks, { platform: "", link: "" }]);
-  };
-
-  const handleSocialChange = (index, field, value) => {
-    const updatedLinks = [...socialLinks];
-    updatedLinks[index][field] = value;
-    setSocialLinks(updatedLinks);
   };
 
   const handleBranchChange = (index, field, value) => {
@@ -186,6 +189,7 @@ const BusinessCard = () => {
         setMainImage={setMainImage}
         setHeaderImage={setHeaderImage}
         openPopup={openPopup}
+        isEditable={true}
       />
 
       <CompanyInfo
@@ -197,13 +201,14 @@ const BusinessCard = () => {
         setNatureOfBusiness={setNatureOfBusiness}
         companyDescription={companyDescription}
         setCompanyDescription={setCompanyDescription}
+        isEditable={true}
       />
 
-      <QuickButtons />
-      <AboutUs aboutUs={aboutUs} setAboutUs={setAboutUs} />
+      <QuickButtons isEditable={false} />
+      <AboutUs aboutUs={aboutUs} setAboutUs={setAboutUs} isEditable={true} />
       <SocialLinks
         socialLinks={socialLinks}
-        handleSocialChange={handleSocialChange}
+        setSocialLinks={setSocialLinks}
         handleAddSocialLink={handleAddSocialLink}
       />
 

@@ -10,6 +10,7 @@ const CompanyInfo = ({
   setNatureOfBusiness,
   companyDescription,
   setCompanyDescription,
+  isEditable = false,
 }) => (
   <div className="flex flex-col items-center">
     <h1 className="text-3xl font-bold">
@@ -17,6 +18,7 @@ const CompanyInfo = ({
         value={companyName}
         onSave={setCompanyName}
         placeholder="Company Name"
+        isEditable={isEditable}
       />
     </h1>
     <p className="">
@@ -26,6 +28,7 @@ const CompanyInfo = ({
         placeholder="Add Description"
         multiline
         textAlign="center"
+        isEditable={isEditable}
       />
     </p>
     <p>
@@ -34,6 +37,7 @@ const CompanyInfo = ({
         value={natureOfBusiness}
         onSave={setNatureOfBusiness}
         placeholder="Nature of Business"
+        isEditable={isEditable}
       />
     </p>
   </div>

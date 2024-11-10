@@ -2,18 +2,55 @@ import React, { useState, useEffect } from "react";
 
 const LinkModal = ({ isOpen, onClose, onSave, initialLink, linkType }) => {
   const [link, setLink] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (initialLink) {
-      setLink(initialLink);
-    } else {
-      setLink("");
-    }
+    setLink(initialLink || "");
+    setError("");
   }, [initialLink]);
 
+  const validateLink = () => {
+    switch (linkType) {
+      case "WhatsApp":
+        if (!/^\d{10}$/.test(link)) {
+          setError("Please enter a valid 10-digit phone number.");
+          return false;
+        }
+        break;
+      case "Instagram":
+        // Extract username if it's a URL, or verify if it's a valid username
+        const instaMatch = link.match(
+          /^https:\/\/(www\.)?instagram\.com\/([^/?]+)/
+        );
+        if (instaMatch) {
+          const username = instaMatch[2];
+          setLink(username);
+          setError("");
+        } else if (/^[a-zA-Z0-9._]+$/.test(link)) {
+          setError("");
+        } else {
+          setError("Please enter a valid Instagram profile link or username.");
+          return false;
+        }
+        break;
+      case "Google Maps":
+        if (!/^https:\/\/www\.google\.[a-z.]+\/maps\/.+/.test(link)) {
+          setError("Please enter a valid Google Maps link.");
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    setError("");
+    return true;
+  };
+
   const handleSave = () => {
-    onSave(link);
-    onClose();
+    if (validateLink()) {
+      onSave(link);
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -27,10 +64,16 @@ const LinkModal = ({ isOpen, onClose, onSave, initialLink, linkType }) => {
           <input
             type="text"
             value={link}
-            onChange={(e) => setLink(e.target.value)}
+            onChange={(e) => {
+              setLink(e.target.value);
+              setError("");
+            }}
             placeholder={`Enter ${linkType} link`}
-            className="w-full px-3 py-2 border rounded"
+            className={`w-full px-3 py-2 border rounded ${
+              error ? "border-red-500" : "border-gray-300"
+            }`}
           />
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
         <div className="flex justify-end">
           <button
@@ -41,7 +84,12 @@ const LinkModal = ({ isOpen, onClose, onSave, initialLink, linkType }) => {
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            disabled={!!error || !link}
+            className={`px-4 py-2 rounded text-white ${
+              error || !link
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
           >
             Save
           </button>
