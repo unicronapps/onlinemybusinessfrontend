@@ -55,7 +55,12 @@ const TeamSection = () => {
     }
     setPersonTypes(updatedTypes);
   };
-
+  const handleDeletePerson = () => {
+    const updatedTypes = [...personTypes];
+    updatedTypes[currentPersonType].people.splice(editingPersonIndex, 1);
+    setPersonTypes(updatedTypes);
+    setIsModalOpen(false); // Close modal after deletion
+  };
   const addPersonType = () => {
     const newType = prompt(
       "Enter the new person type (e.g., Interns, Freelancers):"
@@ -74,13 +79,13 @@ const TeamSection = () => {
           {type.people.map((person, personIndex) => (
             <div
               key={personIndex}
-              className="flex items-start mb-4"
+              className="flex items-start mb-4 bg-red-200"
               onClick={() => openModalForEditPerson(typeIndex, personIndex)}
             >
               <img
                 src={person.image}
                 alt={person.name}
-                className="w-16 h-16 rounded-full object-cover mr-4"
+                className="w-20 h-20 rounded-full object-cover mr-4 mt-2"
               />
               <div>
                 <h3 className="font-semibold">{person.name}</h3>
@@ -129,6 +134,7 @@ const TeamSection = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSavePerson}
+        onDelete={handleDeletePerson}
         person={
           editingPersonIndex !== null
             ? personTypes[currentPersonType].people[editingPersonIndex]

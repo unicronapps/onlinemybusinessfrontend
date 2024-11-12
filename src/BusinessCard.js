@@ -82,9 +82,6 @@ const BusinessCard = () => {
     },
   ]);
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedServiceIndex, setSelectedServiceIndex] = useState(null);
-
   const handleAddSocialLink = () => {
     setSocialLinks([...socialLinks, { platform: "", link: "" }]);
   };
@@ -117,113 +114,51 @@ const BusinessCard = () => {
     setIsPopupOpen(true);
   };
 
-  const closePopup = () => {
-    setIsPopupOpen(false);
-    setSelectedImage(null);
-  };
-
-  const handleDeleteImage = () => {
-    if (selectedImage === "header") setHeaderImage(null);
-    if (selectedImage === "main") setMainImage(null);
-    closePopup();
-  };
-
-  const handleChangeImage = () => {
-    // Simulate image upload with a prompt (replace with actual upload in production)
-    const newImage = prompt("Enter new image URL");
-    if (newImage) {
-      if (selectedImage === "header") setHeaderImage(newImage);
-      if (selectedImage === "main") setMainImage(newImage);
-    }
-    closePopup();
-  };
-  const openImagePopup = (index) => {
-    setSelectedServiceIndex(index);
-    setIsPopupOpen(true);
-  };
-
-  const closeImagePopup = () => {
-    setIsPopupOpen(false);
-    setSelectedServiceIndex(null);
-  };
-
-  const handleDeleteServiceImage = () => {
-    const updatedServices = [...services];
-    updatedServices[selectedServiceIndex].image = null;
-    setServices(updatedServices);
-    closeImagePopup();
-  };
-
-  const handleChangeServiceImage = () => {
-    const newImage = prompt("Enter new image URL");
-    if (newImage) {
-      const updatedServices = [...services];
-      updatedServices[selectedServiceIndex].image = newImage;
-      setServices(updatedServices);
-    }
-    closeImagePopup();
-  };
-
-  const handleServiceChange = (index, field, value) => {
-    const updatedServices = [...services];
-    updatedServices[index][field] = value;
-    setServices(updatedServices);
-  };
-
-  const handleAddService = () => {
-    setServices([
-      ...services,
-      {
-        title: "",
-        description: "",
-        price: "",
-        image: null,
-      },
-    ]);
-  };
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <HeaderImage
-        headerImage={headerImage}
-        mainImage={mainImage}
-        setMainImage={setMainImage}
-        setHeaderImage={setHeaderImage}
-        openPopup={openPopup}
-        isEditable={true}
-      />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <HeaderImage
+          headerImage={headerImage}
+          mainImage={mainImage}
+          setMainImage={setMainImage}
+          setHeaderImage={setHeaderImage}
+          openPopup={openPopup}
+          isEditable={true}
+        />
 
-      <CompanyInfo
-        companyName={companyName}
-        setCompanyName={setCompanyName}
-        yearOfEst={yearOfEst}
-        setYearOfEst={setYearOfEst}
-        natureOfBusiness={natureOfBusiness}
-        setNatureOfBusiness={setNatureOfBusiness}
-        companyDescription={companyDescription}
-        setCompanyDescription={setCompanyDescription}
-        isEditable={true}
-      />
+        <CompanyInfo
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          yearOfEst={yearOfEst}
+          setYearOfEst={setYearOfEst}
+          natureOfBusiness={natureOfBusiness}
+          setNatureOfBusiness={setNatureOfBusiness}
+          companyDescription={companyDescription}
+          setCompanyDescription={setCompanyDescription}
+          isEditable={true}
+        />
 
-      <QuickButtons isEditable={false} />
-      <AboutUs aboutUs={aboutUs} setAboutUs={setAboutUs} isEditable={true} />
-      <SocialLinks
-        socialLinks={socialLinks}
-        setSocialLinks={setSocialLinks}
-        handleAddSocialLink={handleAddSocialLink}
-      />
+        <QuickButtons isEditable={false} />
+        <AboutUs aboutUs={aboutUs} setAboutUs={setAboutUs} isEditable={true} />
+        <SocialLinks
+          socialLinks={socialLinks}
+          setSocialLinks={setSocialLinks}
+          handleAddSocialLink={handleAddSocialLink}
+        />
 
-      <TeamSection />
-      <Branches
-        branches={branches}
-        handleBranchChange={handleBranchChange}
-        handleAddBranch={handleAddBranch}
-        handleDeleteBranch={handleDeleteBranch}
-      />
+        <TeamSection />
+        <Branches
+          branches={branches}
+          handleBranchChange={handleBranchChange}
+          handleAddBranch={handleAddBranch}
+          handleDeleteBranch={handleDeleteBranch}
+        />
 
-      {/* Services and Goods Section */}
-      <ServicesSection />
-      <GallerySection />
-      <FAQSection />
+        {/* Services and Goods Section */}
+        <ServicesSection />
+        <GallerySection />
+        <FAQSection />
+      </div>
     </div>
   );
 };
