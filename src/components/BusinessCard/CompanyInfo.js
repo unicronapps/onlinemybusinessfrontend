@@ -4,8 +4,6 @@ import EditableField from "./EditableField";
 const CompanyInfo = ({
   companyName,
   setCompanyName,
-  yearOfEst,
-  setYearOfEst,
   natureOfBusiness,
   setNatureOfBusiness,
   companyDescription,

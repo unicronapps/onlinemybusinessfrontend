@@ -51,7 +51,7 @@ const ServiceModal = ({ isOpen, onClose, onSave, service }) => {
       formData.append("image", file);
 
       const response = await axios.post(
-        `https://api.imgbb.com/1/upload?key=YOUR_IMGBB_API_KEY`, // Replace with your actual API key
+        `https://api.imgbb.com/1/upload?key=1d39392fa44b5a475d88e6de829ec7f0`, // Replace with your actual API key
         formData
       );
 

@@ -1,40 +1,13 @@
 import React, { useState } from "react";
 import { FaPlus, FaInstagram, FaFacebook } from "react-icons/fa";
 import PersonModal from "./PersonModal";
+import editableFunction from "../../utils/editableFunction";
 
-const TeamSection = () => {
-  const [team, setTeam] = useState([
-    {
-      type: "Owners",
-      people: [
-        {
-          name: "Riya Manhotra",
-          position: "Chairman and CEO",
-          description: "Has 6+ years of experience in the makeup industry",
-          image:
-            "https://upjourney.com/wp-content/uploads/2019/07/how-to-become-a-makeup-artist.jpg",
-          socialLinks: { instagram: "#", facebook: "#" },
-        },
-      ],
-    },
-    {
-      type: "Employees",
-      people: [
-        {
-          name: "Supriya Mittal",
-          position: "Chief Makeup Artist",
-          image:
-            "https://upload.wikimedia.org/wikipedia/commons/8/85/Sneha_at_Un_Samayal_Arayil_Press_Meet.jpg",
-          socialLinks: { instagram: "#", facebook: "#" },
-        },
-      ],
-    },
-  ]);
-
+const TeamSection = ({ team, setTeam, isEditable }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTeamType, setCurrentTeamType] = useState(null);
   const [editingPersonIndex, setEditingPersonIndex] = useState(null);
-
+  console.log({ isEditable });
   const openModalForNewPerson = (typeIndex) => {
     setCurrentTeamType(typeIndex);
     setEditingPersonIndex(null);
@@ -63,7 +36,14 @@ const TeamSection = () => {
     setTeam(updatedTeam);
     setIsModalOpen(false);
   };
-
+  function handleEditableFunction(typeIndex, personIndex) {
+    editableFunction(
+      isEditable,
+      () => openModalForEditPerson(typeIndex, personIndex),
+      // () => console.log("s1"),
+      () => console.log("s")
+    );
+  }
   return (
     <div className="mb-6 p-4 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-6 text-center">Our Team</h1>
@@ -84,7 +64,7 @@ const TeamSection = () => {
               <div
                 key={personIndex}
                 className="flex items-start bg-gray-50 p-3 rounded-lg shadow-sm"
-                onClick={() => openModalForEditPerson(typeIndex, personIndex)}
+                onClick={() => handleEditableFunction(typeIndex, personIndex)}
               >
                 <img
                   src={person.image}

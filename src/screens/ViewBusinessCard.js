@@ -1,11 +1,11 @@
-// components/EditBusinessCard.js
+// components/ViewBusinessCard.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import BusinessCard from "./BusinessCard";
 
-const EditBusinessCard = () => {
+const ViewBusinessCard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [businessCardData, setBusinessCardData] = useState(null);
@@ -45,22 +45,13 @@ const EditBusinessCard = () => {
   }, [id, navigate]);
 
   const handleUpdate = async (updatedData) => {
-    const collectionName = isDraft ? "businessCardsDraft" : "businessCards";
-    const docRef = doc(db, collectionName, id);
-
-    try {
-      console.log(updatedData);
-      await updateDoc(docRef, updatedData);
-      navigate(`/view/${id}`);
-    } catch (error) {
-      console.error("Error updating document:", error);
-    }
+    console.log("");
   };
 
   if (loading) {
     return <p>Loading business card details...</p>;
   }
-  console.log(businessCardData);
+
   return (
     <>
       {businessCardData ? (
@@ -68,7 +59,7 @@ const EditBusinessCard = () => {
           businessData={businessCardData}
           isDraft={isDraft}
           onSave={handleUpdate}
-          isEditable={true}
+          isEditable={false}
         />
       ) : (
         <p>No data found.</p>
@@ -77,4 +68,4 @@ const EditBusinessCard = () => {
   );
 };
 
-export default EditBusinessCard;
+export default ViewBusinessCard;

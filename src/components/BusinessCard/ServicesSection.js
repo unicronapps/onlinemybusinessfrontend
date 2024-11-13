@@ -26,17 +26,22 @@ const ServicesSection = ({ services, setServices, isEditable }) => {
     }
     setServices(updatedServices);
   };
-
+  console.log(services);
+  if (services.length === 0 && isEditable === false) {
+    return <></>;
+  }
   return (
     <div className="mb-4">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold">Our Services and Goods</h2>
-        <button
-          onClick={openModalForNewService}
-          className="text-blue-500 text-sm"
-        >
-          + Add Service
-        </button>
+        {isEditable && (
+          <button
+            onClick={openModalForNewService}
+            className="text-blue-500 text-sm"
+          >
+            + Add Service
+          </button>
+        )}
       </div>
       {services.map((service, index) => (
         <div

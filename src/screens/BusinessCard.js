@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CompanyInfo from "../components/BusinessCard/CompanyInfo";
 import SocialLinks from "../components/BusinessCard/SocialLinks";
 import AboutUs from "../components/BusinessCard/AboutUs";
@@ -9,6 +9,8 @@ import ServicesSection from "../components/BusinessCard/ServicesSection";
 import GallerySection from "../components/BusinessCard/GallerySection";
 import HeaderImage from "../components/BusinessCard/HeaderImage";
 import FAQSection from "../components/BusinessCard/FAQSection";
+import PaymentLink from "../components/BusinessCard/PaymentSection";
+import PaymentSection from "../components/BusinessCard/PaymentSection";
 
 const initialImages = [
   {
@@ -38,10 +40,17 @@ const initialImages = [
   },
 ];
 
-const BusinessCard = ({ isEditable = false, businessData }) => {
-  const [companyName, setCompanyName] = useState("Beauty Point");
+const BusinessCard = ({
+  isEditable = false,
+  businessData,
+  onSave,
+  isDraft,
+}) => {
+  console.log({ businessData });
+  const [companyName, setCompanyName] = useState(
+    businessData.companyName || ""
+  );
   const [companyDescription, setCompanyDescription] = useState("");
-  const [yearOfEst, setYearOfEst] = useState("2023");
   const [natureOfBusiness, setNatureOfBusiness] = useState("Beauty Makeover");
   const [whatsappQuick, setWhatsappQuick] = useState({ value: "", link: "" });
   const [instagramQuick, setInstagramQuick] = useState({
@@ -69,11 +78,7 @@ const BusinessCard = ({ isEditable = false, businessData }) => {
   const [aboutUs, setAboutUs] = useState(
     `Create your Virtual Business Card within minutes...`
   );
-  const [aboutFields, setAboutFields] = useState({
-    companyName: "OpenAI",
-    yearOfEstablishment: "2015",
-    industryType: "Artificial Intelligence dfsdfsdfsdf sdfsdfsdf adas ertert",
-  });
+  const [aboutFields, setAboutFields] = useState({});
   const [branches, setBranches] = useState([
     {
       name: "Main Office",
@@ -116,33 +121,9 @@ const BusinessCard = ({ isEditable = false, businessData }) => {
   const [mainImage, setMainImage] = useState(
     "https://static.vecteezy.com/system/resources/previews/000/660/301/original/vector-beauty-salon-skin-care-logo.jpg" // Replace with actual URL or set to null for testing
   );
-  const [team, setTeam] = useState([
-    {
-      type: "Owners",
-      people: [
-        {
-          name: "Riya Manhotra",
-          position: "Chairman and CEO",
-          description: "Has 6+ years of experience in the makeup industry",
-          image:
-            "https://upjourney.com/wp-content/uploads/2019/07/how-to-become-a-makeup-artist.jpg",
-          socialLinks: { instagram: "#", facebook: "#" },
-        },
-      ],
-    },
-    {
-      type: "Employees",
-      people: [
-        {
-          name: "Supriya Mittal",
-          position: "Chief Makeup Artist",
-          image:
-            "https://upload.wikimedia.org/wikipedia/commons/8/85/Sneha_at_Un_Samayal_Arayil_Press_Meet.jpg",
-          socialLinks: { instagram: "#", facebook: "#" },
-        },
-      ],
-    },
-  ]);
+  const [team, setTeam] = useState(
+    businessData.team || [{ type: "Owners", people: [] }]
+  );
   const [services, setServices] = useState([
     {
       title: "Party Makeover",
@@ -160,7 +141,61 @@ const BusinessCard = ({ isEditable = false, businessData }) => {
     },
   ]);
   const [galleryImages, setGalleryImages] = useState(initialImages);
-
+  const [paymentData, setPaymentData] = useState({
+    qrLinks: {
+      PhonePe: "https://example.com/phonepe-qr", // Placeholder URL
+      Paytm: "https://example.com/paytm-qr", // Placeholder URL
+      Other: "https://example.com/other-qr", // Placeholder URL
+    },
+    bankDetails: {
+      accountHolder: "",
+      accountNumber: "",
+      ifsc: "",
+      bankName: "",
+    },
+  });
+  useEffect(() => {
+    if (businessData) {
+      console.log(businessData.companyName);
+      setCompanyName(businessData.companyName || "");
+      setCompanyDescription(businessData.companyDescription || "");
+      setNatureOfBusiness(businessData.industryType || "");
+      setWhatsappQuick(businessData.whatsappQuick || { value: "", link: "" });
+      setInstagramQuick(businessData.instagramQuick || { value: "", link: "" });
+      setGoogleMapsQuick(
+        businessData.googleMapsQuick || { value: "", link: "" }
+      );
+      setSocialLinks(businessData.socialLinks || []);
+      setAboutUs(businessData.aboutUs || "");
+      setAboutFields(businessData.aboutFields || {});
+      setBranches(businessData.branches || []);
+      setHeaderImage(businessData.headerImage || "");
+      setMainImage(businessData.mainImage || "");
+      setTeam(businessData.team || []);
+      setServices(businessData.services || []);
+      setGalleryImages(businessData.galleryImages || initialImages);
+    }
+  }, [businessData]);
+  const handleSave = () => {
+    const updatedData = {
+      companyName,
+      companyDescription,
+      industryType: natureOfBusiness,
+      whatsappQuick,
+      instagramQuick,
+      googleMapsQuick,
+      socialLinks,
+      aboutUs,
+      aboutFields,
+      branches,
+      headerImage,
+      mainImage,
+      team,
+      services,
+      galleryImages,
+    };
+    onSave(updatedData);
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -175,8 +210,6 @@ const BusinessCard = ({ isEditable = false, businessData }) => {
         <CompanyInfo
           companyName={companyName}
           setCompanyName={setCompanyName}
-          yearOfEst={yearOfEst}
-          setYearOfEst={setYearOfEst}
           natureOfBusiness={natureOfBusiness}
           setNatureOfBusiness={setNatureOfBusiness}
           companyDescription={companyDescription}
@@ -206,7 +239,7 @@ const BusinessCard = ({ isEditable = false, businessData }) => {
           isEditable={isEditable}
         />
 
-        <TeamSection isEditable={isEditable} />
+        <TeamSection isEditable={isEditable} team={team} setTeam={setTeam} />
         <Branches
           branches={branches}
           setBranches={setBranches}
@@ -219,12 +252,24 @@ const BusinessCard = ({ isEditable = false, businessData }) => {
           services={services}
           setServices={setServices}
         />
+        <PaymentSection
+          paymentData={paymentData}
+          setPaymentData={setPaymentData}
+        />
         <GallerySection
           isEditable={isEditable}
           images={galleryImages}
           setImages={setGalleryImages}
         />
         <FAQSection isEditable={isEditable} />
+        {isEditable && (
+          <button
+            onClick={handleSave}
+            className="w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded"
+          >
+            Save Changes
+          </button>
+        )}
       </div>
     </div>
   );

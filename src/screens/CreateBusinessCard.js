@@ -15,6 +15,8 @@ const CreateBusinessCard = () => {
   const [email, setEmail] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
+  const [businessLocation, setBusinessLocation] = useState("");
+  const [primeBusinessLocation, setPrimeBusinessLocation] = useState("");
 
   const categories = ["Beauty", "Health", "Education", "Tech"];
   const subcategories = {
@@ -38,6 +40,9 @@ const CreateBusinessCard = () => {
       email,
       category,
       subcategory,
+      businessLocation,
+      primeBusinessLocation:
+        businessLocation === "City" ? primeBusinessLocation : "",
       companyDescription: "Welcome to our business!",
       socialLinks: [],
       aboutFields: {},
@@ -61,6 +66,7 @@ const CreateBusinessCard = () => {
       setLoading(false);
     }
   };
+
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold mb-4">Create Business Card</h1>
@@ -128,6 +134,33 @@ const CreateBusinessCard = () => {
                 </option>
               ))}
             </select>
+          </label>
+        )}
+        <label className="block mb-2">
+          <span className="text-gray-700">Business Location</span>
+          <select
+            value={businessLocation}
+            onChange={(e) => setBusinessLocation(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+            required
+          >
+            <option value="">Select a location type</option>
+            <option value="All India">All India</option>
+            <option value="City">City</option>
+          </select>
+        </label>
+        {businessLocation === "City" && (
+          <label className="block mb-2">
+            <span className="text-gray-700">
+              Prime Business Location (City)
+            </span>
+            <input
+              type="text"
+              value={primeBusinessLocation}
+              onChange={(e) => setPrimeBusinessLocation(e.target.value)}
+              className="w-full px-3 py-2 border rounded"
+              required
+            />
           </label>
         )}
         <button

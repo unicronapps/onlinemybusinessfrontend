@@ -6,6 +6,8 @@ import BusinessCard from "./screens/BusinessCard";
 import CreateBusinessCard from "./screens/CreateBusinessCard";
 import Login from "./screens/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import EditBusinessCard from "./screens/EditBusinessCard";
+import ViewBusinessCard from "./screens/ViewBusinessCard";
 
 function App() {
   return (
@@ -32,18 +34,18 @@ function App() {
           path="/view/:id"
           element={
             <ProtectedRoute>
-              <BusinessCard />
+              <ViewBusinessCard />
             </ProtectedRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/edit/:id"
           element={
             <ProtectedRoute>
               <EditBusinessCard />
             </ProtectedRoute>
           }
-        /> */}
+        />
       </Routes>
     </Router>
   );

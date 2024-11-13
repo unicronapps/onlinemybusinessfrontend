@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import editableFunction from "../../utils/editableFunction";
 import { FaPen } from "react-icons/fa"; // Import the pencil icon from react-icons
 
@@ -18,7 +18,9 @@ const EditableField = ({
     setIsEditing(false);
     onSave(currentValue);
   };
-
+  useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
   let styleString = "";
   if (textAlign) {
     switch (textAlign) {
