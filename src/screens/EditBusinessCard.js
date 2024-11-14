@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import BusinessCard from "./BusinessCard";
+import LoadingIndicator from "../components/Loading/LoadingIndicator";
 
 const EditBusinessCard = () => {
   const { id } = useParams();
@@ -58,7 +59,7 @@ const EditBusinessCard = () => {
   };
 
   if (loading) {
-    return <p>Loading business card details...</p>;
+    return <LoadingIndicator />;
   }
   console.log(businessCardData);
   return (

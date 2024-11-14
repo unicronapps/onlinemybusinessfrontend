@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import isValidUrl from "../../utils/isValidURL";
 
 const LinkModal = ({ isOpen, onClose, onSave, initialLink, linkType }) => {
   const [link, setLink] = useState("");
@@ -34,10 +35,13 @@ const LinkModal = ({ isOpen, onClose, onSave, initialLink, linkType }) => {
         }
         break;
       case "Google Maps":
-        if (!/^https:\/\/www\.google\.[a-z.]+\/maps\/.+/.test(link)) {
-          setError("Please enter a valid Google Maps link.");
+        if (!isValidUrl(link)) {
+          setError("Please enter a valid google Map URL");
+
           return false;
         }
+        setLink(link);
+        setError("");
         break;
       default:
         break;

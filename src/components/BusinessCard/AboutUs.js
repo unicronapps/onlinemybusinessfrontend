@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import EditFieldModal from "./EditFieldModal";
 import AddFieldModal from "./AddFieldModal";
 import editableFunction from "../../utils/editableFunction";
+import { FaPlus } from "react-icons/fa";
 
 const AboutUs = ({ isEditable = false, aboutFields, setAboutFields }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -51,20 +52,21 @@ const AboutUs = ({ isEditable = false, aboutFields, setAboutFields }) => {
     return <></>;
   }
   return (
-    <div className="p-4">
+    <div className="bg-white shadow rounded-lg p-2 mt-2">
       <div className="flex justify-between">
-        <h2 className="text-lg font-semibold mb-4">About Us</h2>
+        <h2 className="text-2xl font-bold mb-4">About Us</h2>
 
         {isEditable && (
           <button
-            className=" px-2  bg-green-500 text-white rounded"
+            className="flex items-center space-x-2 text-blue-500 text-sm  hover:text-blue-900"
             onClick={openAddModal}
           >
-            Add Field
+            <FaPlus />
+            <span>Add</span>
           </button>
         )}
       </div>
-
+      {fieldLength === 0 && <p>No About Us Field</p>}
       {/* Display each key-value pair */}
       <div className="grid  gap-4">
         {Object.entries(aboutFields).map(([key, value]) => (

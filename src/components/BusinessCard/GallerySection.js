@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-const GallerySection = ({ images, setImages }) => {
-  const previewLimit = 5; // Number of images to show initially
+const GallerySection = ({ images, setImages, isEditable }) => {
+  const previewLimit = 20; // Number of images to show initially
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
   const [uploadPreview, setUploadPreview] = useState(null);
-  const isEditable = true;
 
   const handleAddImage = () => {
     setIsUploadModalOpen(true); // Open the upload modal
@@ -76,7 +75,7 @@ const GallerySection = ({ images, setImages }) => {
   return (
     <div className="mb-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-lg font-semibold">Gallery</h2>
+        <h2 className=" font-semibold text-xl">Gallery</h2>
         {isEditable && (
           <button
             onClick={handleAddImage}

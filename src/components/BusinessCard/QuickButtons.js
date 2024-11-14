@@ -2,6 +2,19 @@ import React, { useState } from "react";
 import LinkModal from "./LinkModal";
 import editableFunction from "../../utils/editableFunction";
 
+function isValidUrl(value) {
+  try {
+    new URL(value);
+    return true; // If the URL constructor succeeds, return true
+  } catch (error) {
+    return false; // If the URL constructor throws an error, return false
+  }
+}
+function isValidInstagramUsername(username) {
+  const instagramUsernameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+  return instagramUsernameRegex.test(username);
+}
+
 const QuickButtons = ({
   isEditable = false,
   whatsappQuick,
@@ -47,16 +60,26 @@ const QuickButtons = ({
         break;
 
       case "instagram":
-        const instaIdMatch = newLink.match(
-          /^https:\/\/www\.instagram\.com\/([^/]+)\/?$/
-        );
-        if (instaIdMatch) {
-          const instaId = instaIdMatch[1];
-          const instaUrl = `https://www.instagram.com/${instaId}`;
-          setInstagramQuick({ value: newLink, link: instaUrl });
+        const isUrl = isValidUrl(newLink);
+        if (isUrl) {
+          const instaIdMatch = newLink.match(
+            /^https:\/\/www\.instagram\.com\/([^/]+)\/?$/
+          );
+          if (instaIdMatch) {
+            setInstagramQuick({ value: newLink, link: newLink });
+          } else {
+            alert("Please enter a valid Instagram profile link.");
+          }
         } else {
-          alert("Please enter a valid Instagram profile link.");
+          const isvalidId = isValidInstagramUsername(newLink);
+          if (isvalidId) {
+            const instaUrl = `https://www.instagram.com/${newLink}`;
+            setInstagramQuick({ value: newLink, link: instaUrl });
+          } else {
+            alert("Please enter a valid Instagram ID or link.");
+          }
         }
+
         break;
 
       case "googleMaps":

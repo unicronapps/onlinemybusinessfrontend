@@ -9,7 +9,11 @@ import paytmLogo from "../../assets/logos/paytm-logo-.png";
 import otherLogo from "../../assets/logos/upi-jpg.png";
 import editableFunction from "../../utils/editableFunction";
 
-const PaymentSection = ({ isEditable = true, paymentData, setPaymentData }) => {
+const PaymentSection = ({
+  isEditable = false,
+  paymentData,
+  setPaymentData,
+}) => {
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("");
@@ -60,19 +64,19 @@ const PaymentSection = ({ isEditable = true, paymentData, setPaymentData }) => {
   return (
     <div className="mb-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-lg font-semibold">Payment Options</h2>
+        {/* <h2 className="text-lg font-semibold">Payment Options</h2> */}
       </div>
 
       {/* QR Payment Options */}
       <div className="mb-6">
-        <h3 className="text-md font-semibold mb-2">QR Code Payments</h3>
+        <h3 className="text-md font-bold text-xl mb-2">QR Code Payments</h3>
         {["PhonePe", "Paytm", "Other"].map((type) => (
           <div
             key={type}
             className="flex items-center mb-4 cursor-pointer"
             onClick={() => handleQrClick(type)}
           >
-            <span className="flex-1">{type}</span>
+            <span className="flex-1 font-bold">{type}</span>
             {paymentData.qrLinks[type] ? (
               <div
                 style={{
@@ -117,21 +121,35 @@ const PaymentSection = ({ isEditable = true, paymentData, setPaymentData }) => {
 
       {/* Bank Account Details */}
       <div>
-        <h3 className="text-md font-semibold mb-2">Bank Account Details</h3>
+        <h3 className="text-md font-semibold mb-2 text-xl">
+          Bank Account Details
+        </h3>
         <div className="space-y-2 cursor-pointer text-gray-700 hover:text-blue-500">
-          <div onClick={() => setIsAccountModalOpen(true)}>
-            <span className="font-medium">Account Holder:</span>{" "}
+          <div
+            onClick={() => setIsAccountModalOpen(true)}
+            className="flex justify-between"
+          >
+            <span className="font-medium">Account Holder</span>{" "}
             {paymentData.bankDetails.accountHolder || "Not provided"}
           </div>
-          <div onClick={() => setIsAccountModalOpen(true)}>
+          <div
+            onClick={() => setIsAccountModalOpen(true)}
+            className="flex justify-between"
+          >
             <span className="font-medium">Account Number:</span>{" "}
             {paymentData.bankDetails.accountNumber || "Not provided"}
           </div>
-          <div onClick={() => setIsAccountModalOpen(true)}>
+          <div
+            onClick={() => setIsAccountModalOpen(true)}
+            className="flex justify-between"
+          >
             <span className="font-medium">IFSC Code:</span>{" "}
             {paymentData.bankDetails.ifsc || "Not provided"}
           </div>
-          <div onClick={() => setIsAccountModalOpen(true)}>
+          <div
+            onClick={() => setIsAccountModalOpen(true)}
+            className="flex justify-between"
+          >
             <span className="font-medium">Bank Name:</span>{" "}
             {paymentData.bankDetails.bankName || "Not provided"}
           </div>

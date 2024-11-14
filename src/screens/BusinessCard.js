@@ -54,7 +54,7 @@ const BusinessCard = ({
   const [natureOfBusiness, setNatureOfBusiness] = useState("Beauty Makeover");
   const [whatsappQuick, setWhatsappQuick] = useState({ value: "", link: "" });
   const [instagramQuick, setInstagramQuick] = useState({
-    value: "abc",
+    value: "",
     link: "",
   });
   const [googleMapsQuick, setGoogleMapsQuick] = useState({
@@ -62,18 +62,15 @@ const BusinessCard = ({
     link: "",
   });
   const [socialLinks, setSocialLinks] = useState([
+    { platform: "Phone", value: "+918448804429" },
     { platform: "Instagram", value: "@beautypoint" },
     { platform: "WhatsApp", value: "+918448804428" },
     { platform: "LinkedIn", value: "in/beautypoint" },
     { platform: "Facebook", value: "facebook.com/beautypoint" },
     { platform: "Twitter", value: "twitter.com/beautypoint" },
     { platform: "YouTube", value: "youtube.com/c/beautypoint" },
-    { platform: "Pinterest", value: "pinterest.com/beautypoint" },
-    { platform: "Snapchat", value: "snapchat.com/add/beautypoint" },
-    { platform: "TikTok", value: "tiktok.com/@beautypoint" },
     { platform: "Website", value: "https://beautypoint.com" },
     { platform: "Email", value: "contact@beautypoint.com" },
-    { platform: "Phone", value: "+918448804429" },
   ]);
   const [aboutUs, setAboutUs] = useState(
     `Create your Virtual Business Card within minutes...`
@@ -122,7 +119,10 @@ const BusinessCard = ({
     "https://static.vecteezy.com/system/resources/previews/000/660/301/original/vector-beauty-salon-skin-care-logo.jpg" // Replace with actual URL or set to null for testing
   );
   const [team, setTeam] = useState(
-    businessData.team || [{ type: "Owners", people: [] }]
+    businessData.team || [
+      { type: "Owners", people: [] },
+      { type: "Employees", people: [] },
+    ]
   );
   const [services, setServices] = useState([
     {
@@ -198,7 +198,7 @@ const BusinessCard = ({
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg relative">
         <HeaderImage
           headerImage={headerImage}
           mainImage={mainImage}
@@ -255,6 +255,7 @@ const BusinessCard = ({
         <PaymentSection
           paymentData={paymentData}
           setPaymentData={setPaymentData}
+          isEditable={isEditable}
         />
         <GallerySection
           isEditable={isEditable}
@@ -263,12 +264,20 @@ const BusinessCard = ({
         />
         <FAQSection isEditable={isEditable} />
         {isEditable && (
-          <button
-            onClick={handleSave}
-            className="w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded"
-          >
-            Save Changes
-          </button>
+          <div className="fixed bottom-0 left-0 w-full bg-white p-2 shadow-lg flex gap-2">
+            <button
+              onClick={() => {}}
+              className="w-full px-4 py-2 bg-green-500 text-white rounded"
+            >
+              View
+            </button>
+            <button
+              onClick={handleSave}
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              Save Changes
+            </button>
+          </div>
         )}
       </div>
     </div>

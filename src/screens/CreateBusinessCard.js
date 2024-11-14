@@ -43,10 +43,70 @@ const CreateBusinessCard = () => {
       businessLocation,
       primeBusinessLocation:
         businessLocation === "City" ? primeBusinessLocation : "",
+      headerImage:
+        "https://i0.wp.com/bcomnotes.in/wp-content/uploads/2020/05/business.png?fit=985%2C699&ssl=1",
+      mainImage:
+        "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=170667a&w=0&k=20&c=LPUo_WZjbXXNnF6ok4uQr8I_Zj6WUVnH_FpREg21qaY=",
+      companyName: businessName,
+      natureofBusiness: subcategory,
       companyDescription: "Welcome to our business!",
-      socialLinks: [],
+      whatsappQuick: { value: "", link: "" },
+      instagramQuick: { value: "", link: "" },
+      googleMapsQuick: { value: "", link: "" },
+      socialLinks: [
+        { platform: "Phone", value: "" },
+        { platform: "Instagram", value: "" },
+        { platform: "WhatsApp", value: "" },
+        { platform: "LinkedIn", value: "" },
+        { platform: "Facebook", value: "" },
+        { platform: "Twitter", value: "" },
+        { platform: "YouTube", value: "" },
+        { platform: "Website", value: "" },
+        { platform: "Email", value: "" },
+      ],
+      team: [
+        { type: "Owners", people: [] },
+        { type: "Employees", people: [] },
+      ],
       aboutFields: {},
-      branches: [],
+      branches: [
+        {
+          name: "Main Office",
+          type: "Head Branch",
+          streetAddress: "Enter Address Here",
+          city: "City",
+          state: "State",
+          pinCode: "PIN CODE",
+          photo1:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn04vv5T5Uca1LvzsCyag1nnjdoCkpCqeGFA&s",
+          photo2:
+            "https://media.istockphoto.com/id/1497169936/vector/storefront-cafe-flat-style.jpg?s=612x612&w=0&k=20&c=_-3RS-fIGKjPVbKOt1vg1fgtwd8GOAiFbZrS1FGfN_Q=",
+          phone: "9999999999",
+          googleMapsLink: "",
+        },
+      ],
+      services: [
+        {
+          title: "Party Makeover",
+          description: "Required for each party for someone special",
+          image:
+            "https://th.bing.com/th/id/OIP.fLmh0MCYQw8NRusW5kHYeQHaE8?rs=1&pid=ImgDetMain", // Replace with actual image URL
+          price: "1500",
+        },
+      ],
+      paymentData: {
+        qrLinks: {
+          PhonePe: "",
+          Paytm: "",
+          Other: "",
+        },
+        bankDetails: {
+          accountHolder: "",
+          accountNumber: "",
+          ifsc: "",
+          bankName: "",
+        },
+      },
       galleryImages: [],
       userId: user?.uid || "anonymous",
       dateCreated: serverTimestamp(),

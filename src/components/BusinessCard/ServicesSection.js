@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ServiceModal from "./ServiceModal";
+import editableFunction from "../../utils/editableFunction";
 
 const ServicesSection = ({ services, setServices, isEditable }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,6 +15,13 @@ const ServicesSection = ({ services, setServices, isEditable }) => {
     setEditingServiceIndex(index);
     setIsModalOpen(true);
   };
+  function handleServiceEdit(index) {
+    editableFunction(
+      isEditable,
+      () => openModalForEditService(index),
+      () => null
+    );
+  }
 
   const handleSaveService = (newService) => {
     const updatedServices = [...services];
@@ -49,7 +57,7 @@ const ServicesSection = ({ services, setServices, isEditable }) => {
           className="border-2 border-purple-300 p-3 mb-3 rounded-lg"
         >
           <div
-            onClick={() => openModalForEditService(index)}
+            onClick={() => handleServiceEdit(index)}
             className="w-full h-40 mb-2 bg-gray-200 flex items-center justify-center cursor-pointer rounded-lg"
           >
             {service.image ? (

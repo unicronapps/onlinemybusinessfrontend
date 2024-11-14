@@ -3,7 +3,7 @@ import { FaPlus, FaInstagram, FaFacebook } from "react-icons/fa";
 import PersonModal from "./PersonModal";
 import editableFunction from "../../utils/editableFunction";
 
-const TeamSection = ({ team, setTeam, isEditable }) => {
+const TeamSection = ({ team, setTeam, isEditable = false }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTeamType, setCurrentTeamType] = useState(null);
   const [editingPersonIndex, setEditingPersonIndex] = useState(null);
@@ -44,20 +44,35 @@ const TeamSection = ({ team, setTeam, isEditable }) => {
       () => console.log("s")
     );
   }
+  let totalTeam = 0;
+
+  // Using forEach to iterate over each group and count people
+  // {
+  //   team &&
+  //     team.length &&
+  //     team.forEach((type) => {
+  //       if (type.people && type.person.length) totalTeam += type.people.length;
+  //     });
+  //   if (totalTeam.length === 0 && isEditable === false) {
+  //     return <></>;
+  //   }
+  // }
   return (
-    <div className="mb-6 p-4 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-6 text-center">Our Team</h1>
+    <div className="mb-3 mt-3 p-4 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold mb-6">Our Team</h1>
       {team.map((type, typeIndex) => (
         <div key={typeIndex} className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">{type.type}</h2>
-            <button
-              onClick={() => openModalForNewPerson(typeIndex)}
-              className="flex items-center space-x-2 text-blue-500 hover:text-blue-600"
-            >
-              <FaPlus />
-              <span className="text-sm">Add Person</span>
-            </button>
+            {isEditable && (
+              <button
+                onClick={() => openModalForNewPerson(typeIndex)}
+                className="flex items-center space-x-2 text-blue-500 hover:text-blue-600"
+              >
+                <FaPlus />
+                <span className="text-sm">Add Person</span>
+              </button>
+            )}
           </div>
           <div className="space-y-4">
             {type.people.map((person, personIndex) => (

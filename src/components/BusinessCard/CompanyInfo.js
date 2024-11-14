@@ -30,13 +30,14 @@ const CompanyInfo = ({
       />
     </p>
     <p>
-      {/* <strong>Nature of Business: </strong> */}
-      <EditableField
-        value={natureOfBusiness}
-        onSave={setNatureOfBusiness}
-        placeholder="Nature of Business"
-        isEditable={isEditable}
-      />
+      <strong>
+        <EditableField
+          value={natureOfBusiness}
+          onSave={setNatureOfBusiness}
+          placeholder="Nature of Business"
+          isEditable={isEditable}
+        />
+      </strong>
     </p>
   </div>
 );

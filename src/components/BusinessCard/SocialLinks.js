@@ -47,6 +47,14 @@ const SocialLinks = ({ socialLinks, setSocialLinks, isEditable = false }) => {
         return `https://instagram.com/${value}`;
       case "twitter":
         return `https://twitter.com/${value}`;
+      case "youtube":
+        return `https://youtube.com/c/${value}`;
+      case "website":
+        return value.includes("http") ? value : `https://${value}`;
+      case "email":
+        return `mailto:${value}`;
+      case "phone":
+        return `tel:${value.replace(/\D/g, "")}`;
       default:
         return value.includes("http") ? value : `https://${value}`;
     }
@@ -60,40 +68,49 @@ const SocialLinks = ({ socialLinks, setSocialLinks, isEditable = false }) => {
   // Handle saving changes in the modal
   const handleSave = (index, platform, value) => {
     handleSocialChange(index, "platform", platform);
-    handleSocialChange(index, "link", value);
+    handleSocialChange(index, "value", value);
     setSelectedLink(null); // Close modal after saving
   };
-
+  let isEmpty = false;
+  socialLinks.forEach((element) => {
+    if (element.value) isEmpty = true;
+  });
+  if (!isEmpty && !isEditable) return <></>;
   return (
-    <div className="bg-white shadow rounded-lg p-4">
-      <h2 className="text-lg font-semibold mb-4 text-gray-700">Social Links</h2>
-
+    <div className="bg-white shadow rounded-lg p-2">
+      <h2 className="text-xl font-semibold mb-4 text-gray-700">Social Links</h2>
       {/* Display each social link */}
-      {socialLinks.map((link, index) => (
-        <div
-          key={index}
-          className="flex items-center mb-4 space-x-3 cursor-pointer"
-          onClick={() =>
-            editableFunction(
-              isEditable,
-              () => openEditModal(link, index),
-              () =>
-                window.open(
-                  getRedirectLink(link.platform, link.value),
-                  "_blank"
-                )
-            )
-          }
-        >
-          <div className="w-8 h-8 flex items-center justify-center">
-            {getIcon(link.platform)}
+      {socialLinks.map((link, index) => {
+        if (!link.value && !isEditable) {
+          return <></>;
+        }
+
+        return (
+          <div
+            key={index}
+            className="flex items-center mb-4 space-x-3 cursor-pointer"
+            onClick={() =>
+              editableFunction(
+                isEditable,
+                () => openEditModal(link, index),
+                () =>
+                  window.open(
+                    getRedirectLink(link.platform, link.value),
+                    "_blank"
+                  )
+              )
+            }
+          >
+            <div className="w-8 h-8 flex items-center justify-center">
+              {getIcon(link.platform)}
+            </div>
+            <div className="flex flex-col">
+              <span className="font-medium text-gray-800">{link.platform}</span>
+              <span className="text-gray-500">{link.value}</span>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <span className="font-medium text-gray-800">{link.platform}</span>
-            <span className="text-gray-500">{link.value}</span>
-          </div>
-        </div>
-      ))}
+        );
+      })}
 
       {/* EditSocialLinkModal */}
       {selectedLink && (

@@ -8,6 +8,8 @@ import Login from "./screens/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import EditBusinessCard from "./screens/EditBusinessCard";
 import ViewBusinessCard from "./screens/ViewBusinessCard";
+import QRBusinessCard from "./screens/QRBusinessCard";
+import RedirectSLink from "./screens/RedirectSLink";
 
 function App() {
   return (
@@ -30,11 +32,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/view/:id" element={<ViewBusinessCard />} />
         <Route
-          path="/view/:id"
+          path="/qr/:id"
           element={
             <ProtectedRoute>
-              <ViewBusinessCard />
+              <QRBusinessCard />
             </ProtectedRoute>
           }
         />
@@ -46,6 +49,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/s/:sid" element={<RedirectSLink />} />
+        <Route path="/short/:sid" element={<RedirectSLink />} />
+        {/* Redirect route */}
       </Routes>
     </Router>
   );
