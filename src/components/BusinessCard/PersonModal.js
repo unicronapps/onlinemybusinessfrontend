@@ -13,7 +13,7 @@ const PersonModal = ({ isOpen, onClose, onSave, onDelete, person }) => {
   const [error, setError] = useState("");
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
-  const imgbbAPIKey = "your_imgbb_api_key"; // Replace with your actual ImgBB API key
+  const imgbbAPIKey = "1d39392fa44b5a475d88e6de829ec7f0"; // Replace with your actual ImgBB API key
 
   useEffect(() => {
     if (person) {
