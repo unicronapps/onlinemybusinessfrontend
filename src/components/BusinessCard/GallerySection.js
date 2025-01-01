@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 const GallerySection = ({ images, setImages, isEditable }) => {
@@ -24,13 +25,37 @@ const GallerySection = ({ images, setImages, isEditable }) => {
 
   const handleConfirmUpload = () => {
     if (uploadPreview) {
-      const newImage = {
-        src: uploadPreview,
-        thumbnail: uploadPreview,
-      };
-      setImages([...images, newImage]);
-      setUploadPreview(null); // Clear preview
-      setIsUploadModalOpen(false); // Close upload modal
+      // Convert image to FormData since ImgBB API expects multipart/form-data
+      const formData = new FormData();
+      formData.append("image", uploadPreview);
+
+      // ImgBB API endpoint
+      const url = "https://api.imgbb.com/1/upload";
+      // Your API key from ImgBB (replace 'YOUR_API_KEY' with your actual API key)
+      const apiKey = "1d39392fa44b5a475d88e6de829ec7f0";
+
+      // Make the HTTP request to ImgBB
+      axios
+        .post(`${url}?key=${apiKey}`, formData)
+        .then((response) => {
+          if (response.data.status === 200) {
+            // Use the URL from the response for the new image object
+            const newImage = {
+              src: response.data.data.url,
+              thumbnail: response.data.data.thumb.url,
+            };
+
+            // Update the images array with the new image
+            setImages([...images, newImage]);
+            setUploadPreview(null); // Clear preview
+            setIsUploadModalOpen(false); // Close upload modal
+          } else {
+            console.error("Failed to upload image:", response.data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
     }
   };
 

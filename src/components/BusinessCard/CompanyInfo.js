@@ -17,6 +17,7 @@ const CompanyInfo = ({
         onSave={setCompanyName}
         placeholder="Company Name"
         isEditable={isEditable}
+        textAlign={"center"}
       />
     </h1>
     <p className="">
